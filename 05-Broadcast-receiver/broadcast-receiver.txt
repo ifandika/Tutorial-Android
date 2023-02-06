@@ -1,0 +1,9 @@
+
+| Broadcast Receiver
+
+- Untuk merespon jika terjadi suatu tindakan dari sistem atau apk lain. Misalnya jika kita
+  menghidupkan mode pesawat maka terjadi tindakan dari sistem maka BroadcastReceiver akan 
+  merespon. Objek yang menerima suatu tindakan disebut Receiver.
++ 2 Lankah yg diperlukan:
+	- Membuat
+	- Me register

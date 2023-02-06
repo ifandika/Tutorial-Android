@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Root manifest -->
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pendahuluan.main">
+	
+	<!--
+		Izin
+		- name = Nama izin.
+	-->
+	<manifest ... >
+		<uses-permission android:name="android.permission.SEND_SMS"/>
+		...
+	</manifest>
+	
+    <!-- 
+    	Root konfigurasi
+    	- icon = Gambar apk.
+    	- label = Nama yg ditampilkan ketika apk terinstal.
+    	- theme = 
+    	- 
+    -->
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+       	android:largeHeap="true"
+		android:name=".Applications"
+        android:resizeableActivity="true">
+        
+        <!-- 
+        	Deklarasi untuk setiap Activity 
+        	- name = Nama class Activity.
+        	- label = Jika activity utama maka perlu label untuk ditampilkan ketika apk terinstal
+        -->
+        <activity
+            android:name=".<nama>"
+            android:label="@string/app_name">
+            <!-- 
+            	Deklarasi intent filter/jenis perilaku dari activity 
+            	- action->name = Jenis aksi intent.
+            	- category->name = Jenis kategori intent.
+            -->
+            <intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        
+        <!-- 
+        	Deklarasi untuk setiap Service 
+        	- name = Nama class Service
+        -->
+        <service
+            android:name=".<nama>">
+        </service>
+        
+        <!-- 
+        	Deklarasi untuk setiap Broadcast Receiver 
+        	- name = Nama BroadcastReceiver class.
+        -->
+        <receiver
+            android:name=".<nama>">
+        </receiver>
+        
+        <!-- Deklarasi untuk setiap Content Provider -->
+        <provider
+            android:name=".<nama>">
+        </provider>
+        
+      <meta-data
+          android:name="android.max_aspect"
+          android:value="4.0"/>
+          
+    </application>
+</manifest>

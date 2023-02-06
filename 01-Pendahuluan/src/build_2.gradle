@@ -1,0 +1,38 @@
+// Bawaan dari projek
+apply plugin: 'com.android.application'
+
+// Root
+android {
+	// Versi SDK untuk kompilasi
+    compileSdkVersion 29
+    // 
+    buildToolsVersion "29.0.0"
+    
+    // 
+    defaultConfig {
+    	// Nama id dari projek, biasanya sama dengan nama package
+        applicationId "com.pendahuluan.main"
+        // Min SDK/Android versi untuk menjalankan apk
+        minSdkVersion 21
+        // Target/disarankan
+        targetSdkVersion 29
+        // Versi dari projek/apk
+        versionCode 1
+        // Versi apk yg akan ditampilkan ke playstore
+        versionName "1.0"
+    }
+    // 
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+// Bahan/Plugin yg dibutuhkan
+dependencies {
+    implements 'androidx.appcompat:appcompat:1.0.0'
+	implements 'com.google.android.material:material:1.0.0'
+    implements fileTree(dir: 'libs', include: ['*.jar'])
+}

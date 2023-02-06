@@ -1,0 +1,35 @@
+
+| Intent
+
+- Objek untuk melakukan suatu tindakan seperti Pindah Activity,Memulai layanan,Mengirim data/informasi
+- Intent menyimpan data dengan cara KEY dan VALUE.
++ Tipe intent
+  - Implisit(Permintaan tidak jelas), biasanya tidak ada target.
+  - Contoh:
+  	[
+  		Intent intent = new Intent();
+  		intent.setAction(Intent.ACTION_SEND);
+  		intent.putExtra(Intent.EXTRA_TEXT, "Is Intent Implisit");
+  		intent.setType("text/plain");
+  		startActivity(intent);
+  	]
+  - Explisit(Permintaan yang tertentu, mengarah). biasanya terdapat target.
+  - Contoh:
+  	[
+  		Intent intent = new Intent(<Objek_saat_ini>.this, <Objek_tujuan>.this);
+  		startActivity(intent);
+  	]
++ Membawa informasi yg digunakan sistem android untuk menentukan komponen mana yang akan dimulai
+  + Informasi terdapat berbagai komponen
+    - Nama komponen yang akan dimulai
+    - Aksi yang dilakukan
+    - Data
+    - Kategori
+    - Tambahan(Optional)
+    - Flag
+- Jika hanya ada satu aplikasi yang bisa menanganinya, aplikasi tersebut akan langsung terbuka dan diberi intent
+- Menjalankan Intent dengan fungsi startActivity()
+- Menjalankan Intent dan mendapatkan data dengan activity yang dijalankan dgn fungsi startActivityForResult(),
+	menerima data dengan fungsi onActivityResult()
++ Note:
+	- Selalu jalankan Service(Layanan) dengan Intent explisit.

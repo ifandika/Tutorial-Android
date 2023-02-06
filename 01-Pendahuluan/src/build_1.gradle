@@ -1,0 +1,20 @@
+// Level teratas konfigurasi.
+
+// Nama penyedia plugin/bahan yg dibutuhkan
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.+'
+    }
+}
+
+// Repo untuk semuanya dalam proejek ini
+allprojects {
+    repositories {
+        jcenter()
+        google()
+        maven()
+    }
+}
