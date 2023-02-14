@@ -1,0 +1,18 @@
+
+| Dinamis Broadcast Receiver
+	-
+	
+	
+| Implementasi
+	- Kode MainActivity
+		[
+			
+		]
+	- Kode MyBrodcastReceiver
+		[
+			
+		]
+	- Kode Manifest
+		[
+			
+		]

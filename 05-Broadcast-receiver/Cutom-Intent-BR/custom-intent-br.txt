@@ -1,0 +1,44 @@
+
+| Custom Intent Broadcast Receiver
+	- Mengirim "broadcast" dengan tujuan yg kita inginkan.
+	+ Ilustrasi
+		- [ A ] -> kirim ke alamat="alamat1.com".
+		- [ B ] Alamat B adalah "alamat1.com".
+		- [ B ] B menerima data yg dikirm dari A.
+		
+		
+| IMPLEMENTASI
+	- Kode MainActivity
+		[
+			...
+			// Objek Intent untuk data yg akan dikirim
+			Intent intent = new Intent();
+			intent.addCategory(Intent.CATEGORY_DEFAULT);
+			// Data action yg kita inginkan
+			intent.setAction("my.custom.action.br");
+			sendBroadcast(intent);
+			...
+		]
+	- Kode MyBroadcastReceiver
+		[
+			...
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				// Tampilkan pesan
+				Toast.makeText(context, "Ini MyBR", Toast.LENGTH_SHORT).show();
+			}
+			...
+		]
+	- Kode Manifest
+		[
+			...
+			<receiver
+				android:name=".MyBR">
+				<intent-filter>
+					<!-- Data action sama dengan data action pada Intent yg dikirim -->
+					<action android:name="my.custom.action.br"/>
+					<category android:name="android.intent.category.DEFAULT"/>
+				</intent-filter>
+			</receiver>
+			...
+		]

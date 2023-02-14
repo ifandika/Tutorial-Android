@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(tag, "callback onPause()");
     }
     
-    // Jika lama tidak dijalankan, jika pengguna kembali maka akan ke onRestart().
+    // Dipanggil ketika apk di minimize, diletakan di latar belankang.
     @Override
     protected void onStop() {
         super.onStop();
