@@ -10,8 +10,8 @@ public class MyContentProvider extends {
 }
 ```
 - Digunakan untuk __mengakses data, menyimpan data apk, pusat untuk data apk. Berkerja di data akses layer.__
-### Alur
-![Alur Content Provider]("https://github.com/ifandika/Tutorial-Android/05-Broadcast-Receiver/ic_flow_contentprovider.jpg")
+## Alur
+![Alur Content Provider]("https://github.com/ifandika/Tutorial-Android/blob/master/06-Content-Provider/ic_flow_contentprovider.jpg")
 ### Content URI(Uniform Resource Identifier)
 - Konsep utama pada content provider.
 ```
@@ -21,15 +21,15 @@ content://pemilik/path(opsional)/path_id(opsional)
 - __pemilik__ = Nama pemilik data yg akan dituju.
 - __path__ = Untuk membedakan jenis data yg di tuju, semisal data gambar pd folder gambar, video pd folder video.
 - __path_id__ = Jika ingin mengakses data tertentu, semisal akses data gambar ke ..., video ke ... .
-### Operasi dasar
+## Operasi dasar
 - [x] __CREATE__
 - [x] __READ__ 
 - [x] __UPDATE__
 - [x] __DELETE__
-### Alur akses data.
-![Alur Content Provider]("https://github.com/ifandika/Tutorial-Android/05-Broadcast-Receiver/ic_flow_access_data.jpg")
+## Alur akses data.
+![Alur Content Provider]("https://github.com/ifandika/Tutorial-Android/blob/master/06-Content-Provider/ic_flow_access_data.jpg")
 ## Demo
-- Kode MainActivity
+- ### Kode MainActivity
 ```java
 	...
     private Button buttonSaveData, buttonLoadData;
@@ -100,11 +100,9 @@ content://pemilik/path(opsional)/path_id(opsional)
         super.onStart();
         initOnClick();
     }
-    ...
 }
-    ...
 ```
-- Kode MyContentProvider
+- ### Kode MyContentProvider
 ```java
 public class MyContentProvider extends ContentProvider {
     public MyContentProvider() {}
@@ -241,7 +239,7 @@ public class MyContentProvider extends ContentProvider {
     ...
 }
 ```
-- Kode activity_main
+- ### Kode activity_main
 ```xml
 	...
 	<EditText
@@ -277,7 +275,7 @@ public class MyContentProvider extends ContentProvider {
 		android:id="@+id/textView_viewResultData"/>
 	...
 ```
-- Kode Manifest
+- ### Kode Manifest
 ```xml
 	...
 	<activity
@@ -297,4 +295,4 @@ public class MyContentProvider extends ContentProvider {
 	</provider>
 	...
 ```
-### Catatan
+## Catatan
