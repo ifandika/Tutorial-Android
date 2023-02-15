@@ -87,7 +87,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 	...
 ```
 - Kode Manifest
-```java
+```xml
 	...
 	<uses-permission android:name="android.permission.BLUETOOTH"/>
 	
