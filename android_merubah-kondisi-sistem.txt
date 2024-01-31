@@ -1,0 +1,34 @@
+
+| Merubah Kondisi Sistem
+
+- Merubah kondisi sistem seperti menghidupkan wifi,bluetooth,torch(flashlight) 
+  dan sebaliknya. Untuk akses sitem gunakan #getSystemService(Context.<jenis_sistem>).
+  [ Contoh akses wifi
+		WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+  ]
+  Lalu tambahkan izin di manifest.
+  [ Tambah izin untuk akses wifi dan rubah kondisi.
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>    
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+  ]
+  
+  Contoh kode program menghidupkan flashlight.
+  [
+	// Objek dari camera(CameraManager)
+	CameraManager cm = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
+	
+	try {
+		// Pada hp terdapat banyak camera, setiap camera memiliki id, untuk flashlight id/nomer ke 1
+		String cameraId = cm.cm.getCameraIdList()[0];
+		
+		// Hidupkan
+		cm.setTorchMode(cameraId, true);
+		
+		// Matikan
+		cm.setTorchMode(cameraId, false);
+	}
+	catch(CameraAccessException cae) {
+		cae.printStackTrace();
+	}
+  ]
+  

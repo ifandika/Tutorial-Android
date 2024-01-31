@@ -1,0 +1,10 @@
+
+			| Android WorkManager
+
+- WorkManager adalah proses latar belakang yg digunakan untuk menjalanakan pekerjaan/tugas.
+  Walaupun android sedang di mulai ulang jadwal/tugas WorkManager masih ada dan akan dijalankan.
+  Jenis tugas pada WorkManager:
+	- Langsung = Tugas yang langsung di jalankan mungkin karena penting.
+	- Berjalan lama = Tugas akan berjalan lama karena tidak di prioritaskan(penting) misalnya
+					  mendownload data apk, ketika pengguna menggunakan apk maka tugas akan dijalankan.
+	- Dapat ditunda = Tugas bisa dijalankan di lain waktu dan dapat dijalankan secara berkala/bertahap.

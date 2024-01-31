@@ -1,0 +1,67 @@
+
+| Content Provider
+
+	- Digunakan untuk mengakses data, menyimpan data apk, pusat untuk data apk.
+	
+| Alur Content Provider
+		[ Apk ]
+			|
+	[ Content Provider ]
+			Write/Read
+	  |			|			|
+	Files	Database	Internet
+	
+| Alur Pengambilan/Penambahan Data
+	[ UI/Tampilan/Input ] "Activity, Fragment, dll."
+			|
+	[ CursorLoader ] "Sudah di atur oleh sistem android, maka dilewati dan memanggil ContentResolver"
+			|
+	[ ContentResolver ] "Memanggil dengan fungsi getContentResolver().<nama_fungsi_di_contentprovider>"
+			|
+	[ ContentProvider ] "Fungsi yg harus di override onCreate, query, insert, delete, getType, update."
+			|
+	[ Penyimpanan Data ] "Files, Database, Internet."
+	
+| URI
+	- Sebuah gabungan kata/huruf yg ditujukan sebagai alamat sumber.
+	+ Struktur: 
+		content://com.example.provider/persons/10
+		- content = Standar alamat.
+		- com.example.provider = Alamat sumber.
+		- persons = Rumah yg akan dituju, krena setiap alamat terdapat benyak rumah.
+		- 10(Opsional) = Untuk mengambil data secara spesifik.
+	- Mendapatkan URI tertentu/kolom tertentu dengan cara CONTENT URI saya + NO data yg di ambil/dimasukan, content uri saya content://com.provider/users
+	  lalu no data = 4 maka hasilnya content://com.provider.users/4.
+		[
+			Uri singleUri = ContentUris.withAppendedId(<content_uri_saya>, <no_data>);
+		]
+		
+| Implementasi
+	- Kode class content provider.
+	[
+		public class <nama_class> extends ContentProvider {
+			...
+		}
+	]
+	- Deklarasi di manifest.
+	[
+		<provider
+			android:name="<package>.<nama_class>"
+            android:authorities="<content_uri>"
+            android:grantUriPermissions="true"
+            android:exported="true"
+            android:permission="...">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
+	]
+	
+| Catatan
+	- Pola uri jika "*" cocok untuk text apapaun, jika "#" hanya cocok untuk nilai.
+	- Untuk menagkses content provider perlu memanggil content resolver dulu getContentResolver().
+	- Berkerja di data akses layer.
+	- Content Provider menyimpan data menggunakan SQLite.
+	- Objek UriMatcher untuk mencocokan uri yg sudah ditentukan, UriMatcher menggunakan konstanta integer sebagai pembanding.
+	
+	

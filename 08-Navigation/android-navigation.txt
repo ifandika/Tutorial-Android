@@ -1,0 +1,9 @@
+
+				| Android Navigation
+
+- Navigasi/berpindah" di dalam apk, semisal pindah dari menu utama ke menu profile.
+  Navigasi dibagi mjd 3:
+	- Navigation Graph
+	- Navigation Host
+	- Navigation Controller
+	

@@ -1,0 +1,137 @@
+
+| Android PopUp
+
+- PopUp adalah sebuah tampilan kecil untuk dialog dengan pengguna, semisal pengguna
+  menekan tombol keluar apk lalu muncul popup dengan pesan "yakin ingin keluar".
+  
+  Buat popup dengan objek CardView, tambah dependency ke build.gradle.
+  [ build.gradle
+	dependencies {
+		implements 'com.android.support:cardview-v7:<versi_berapa>'
+	}
+  ]
+  
+  Buat tombol di tampilan utama apk.
+  [ activity_main.xml
+	...
+	<Button
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="Show PupUp"
+		android:id="@+id/button_showPopUp"
+		android:layout_gravity="center"/>
+	...
+  ]
+  
+  Buat file xml khusus untuk tampilan popup.
+  [ layout_popup.xml
+	<?xml version="1.0" encoding="utf-8"?>
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:gravity="center">
+	
+		<android.support.v7.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:cardCornerRadius="5dp">
+	
+			<LinearLayout
+				android:padding="10dp"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+	
+				<TextView
+					android:id="@+id/textView_message"
+					android:text="Yakin masbro ingin keluar"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+	
+				<Button
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="Yes"
+					android:id="@+id/button_yes"
+					android:layout_gravity="left"/>
+	
+			</LinearLayout>
+	
+		</android.support.v7.widget.CardView>
+	
+	</LinearLayout>
+  ]
+  
+  Buat fungsi untuk menampilkan popup.
+  [ MainActivity.java
+	...
+	public void showPopUp(View view) {
+		// Untuk objek view dari popup.
+        LayoutInflater layoutInflater = (LayoutInflater)view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
+        
+        // Set layout xml popup.
+        View popUpView = layoutInflater.inflate(R.layout.layout_popup, null);
+        
+        // (Opsional) untuk batas tampilan popup.
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        
+        // (Opsional)
+        boolean focusable = true;
+        
+        // Objek untuk buat popup
+        final PopupWindow popUpWindow = new PopupWindow(popUpView, width, height, focusable);
+        // Set tata letak
+        popUpWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        
+        // Tetapkan objek/komponen yg ada di popup
+        TextView textViewMessage = popUpView.findViewById(R.id.textView_message);
+        Button buttonYes = popUpView.findViewById(R.id.button_yes);
+        
+        // Jika pengguna menekan tombol di popup
+        buttonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Ini PopUp coyyy", Toast.LENGTH_SHORT).show();
+            }
+        });
+            
+        // Menghandle jika pengguna klik di luar zona pop up
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Tutup popup
+                    popUpWindow.dismiss();
+                    return true;
+                }
+            });
+    }
+    ...
+  ]
+  
+  Konfigurasi tombol untuk tampilkan popup di.
+  [ MainActivity.java
+	...
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+		
+		Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+        
+        Button buttonShowPopUp = findViewById(R.id.button_showPopUp);
+        buttonShowPopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopUp(view);
+            }
+        });
+    }
+    ...
+  ]
+  

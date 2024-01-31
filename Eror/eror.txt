@@ -1,0 +1,8 @@
+
+| Eror
+
+- Error pada pembuatan apk android.
+
++ Eror apk tidak mau terbuka/apk terus berhenti.
+	- Data,nilai yg dimasukan tidak sesuai, seperti salah deklarasi nama 
+	  activity di manifest.

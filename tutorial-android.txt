@@ -1,0 +1,88 @@
+
+| Tutorial Android
+
+- Android adalah Sistem Operasi seluler berbasis Linux yang diperuntukan 
+  untuk Headphone dan Tablet
+- Aplikasi yang dibuat akan di kompilasi menjadi file .apk
+- Aplikasi berjalan pada VM(Virtual Machine) sendiri, sehingga kode apk
+  terisolasi dari apk lainnya
+- Sistem Android mengimplementasikan prinsip privilese minim. Ini berarti, 
+  secara default aplikasi hanya memiliki akses ke komponen yang diperlukannya
+  untuk melakukan pekerjaannya dan tidak lebih dari itu.
+- Dua aplikasi bisa diatur untuk menggunakan ID pengguna Linux yang sama,
+  dalam hal ini keduanya bisa saling mengakses file masing-masing
+
+# Android Vs AndroidX
+  • Android
+    
+  • AndroidX
+    
++ Arsitektur UI(User Interface)
+	- UI Layer(Tombol, Gambar, Tulisan)
+	- Data Layer(Data, Badan apk, Email)
+	+ Alur
+		+----- [UI Layer] <<----+
+		|						|
+		+--->> [Data Layer] ----+
+		
+[ https://developer.android.com/static/guide/components/fundamentals ]
+# Komponen Aplikasi
+
+	- Activity | Aktivitas = Tampilan apk.
+  
+    # Filter Intent
+      - Fitur yang dpt memberikan tindakan pada peemintaan 
+        implisit(Permintaan bebas)
+        dan 
+        explisit(Permintaan yang tertentu, mengarah).
+      - Komponene Filter Intent
+        1. Action(Tindakan yang akan dilakukan)
+        2. Category
+        3. Data(Tipe data)
+        
+    - Izin Apk
+      - Konfigurasi izin yang diperlukan pada Apk
+      - Jika apk anda ingin menggunakan apk lain maka apk lain harus menentukan izin yang dapat digunakan.
+        Agar diizinkan menggunakan apk lain maka gunakan izin yang cocok dgn izin yang disetel pada apk yang
+        akan digunakan.
+        
+  • Service | Layanan
+    - Pekerjaan yg berjalan dibelakang layar dan tidak terlihat oleh pengguna.
+      
+  • Broadcast receiver | Penerima siaran
+    - komponen yang memungkinkan sistem menyampaikan informasi di luar alur apk,
+      menjadikan aplikasi tersebut dapat merespons informasi ke seluruh sistem. 
+      Misalnya, suatu aplikasi dapat menjadwalkan alarm untuk mengirimkan notifikasi 
+      agar pengguna tahu tentang acara yang akan datang dan dengan mengirimkan 
+      alarm tersebut ke Penerima Siaran aplikasi, aplikasi tersebut tidak perlu untuk 
+      tetap berjalan hingga alarm mati.
+    - Setiap data/informasi yg dikirim sebagai objek Intent
+    - code
+      - <JobService>
+      - <JobScheduler>
+      - <BroadcastReceiver> | Penerima informasi/pengguna
+      - Intent | Nama objek informasi yang dikirim
+      
+  • Content Provider | Penyedia materi
+    - Yang mengelola data apk anda yang berada di file, database SQL, web, dll.
+      Melalui penyedia materi, aplikasi lain bisa melakukan kueri atau memodifikasi 
+      data jika penyedia materi mengizinkannya.
+    - code
+      - <ContentProvider>
+  
++ File Manifest
+  - Elemen <application> root elemen
+  - Elemen <activity> untuk aktivitas.
+  - Elemen <service> untuk layanan.
+  - Elemen <receiver> untuk penerima siaran.
+  - Elemen <provider> untuk penyedia konten.
+
++ Note
+	- Bahkan apk hanya punya 1 activity dan activity tersebut sudah di hapus, apk masih berjalan di memori.
+	- Tipe int pada parameter fungsi biasanya hanya untuk id dari sebuah komponen
+	- Aspek unik dari desain sistem Android adalah aplikasi mana pun bisa memulai 
+		komponen aplikasi lain. Misalnya, jika Anda menginginkan pengguna mengambil 
+		foto dengan kamera perangkat, bisa saja aplikasi lain yang melakukannya dan
+		aplikasi Anda bisa menggunakannya, sebagai ganti mengembangkan aktivitas 
+		sendiri untuk mengambil foto. Karenanya, tidak seperti aplikasi di sebagian 
+		besar sistem lain, aplikasi Android tidak memiliki titik masuk tunggal (tidak ada main() fungsi).

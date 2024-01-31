@@ -1,0 +1,17 @@
+	...
+	<activity
+       android:name=".MainActivity"
+       android:label="@string/app_name">
+       <intent-filter>
+       		<action android:name="android.intent.action.MAIN"/>
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+    </activity>
+    
+	<provider
+		android:name=".MyContentProvider"
+		android:authorities="com.demo.mycontentprovider"
+		android:enabled="true"
+		android:exported="true">
+	</provider>
+	...

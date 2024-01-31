@@ -1,0 +1,90 @@
+
+				| Android Permission
+
+- Izin dalam apk seperti izin akses penyimpanan, akses lokasi, akses kamera dll.
+  Dibagi mjd 2:
+	- Runtime = Izin saat apk berjalan, izin yg diminta dapat disetujui atau tidak 
+				tergantung dari pengguna.
+	- 
+	
+| Implementasi
+	+ Runtime Permission
+		- Kode Utama.
+		[
+			public class MainActivity extends AppCompatActivity {
+			    private final int MY_PERMISSION_REQUEST_READ_CONTACT = 1;
+			    
+			    // Fungsi cek jika izin belum di setujui.
+			    private void requestReadContact() {
+			    	// Cek jika izin READ_CONTACTS pd manifest belum dizinkan(Kode cek izin != dengan kode izin diizinkan).
+			        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+			            // Cek izin setelah apk dibuka pertama kali, jika pertama kali apk dibuka maka hasil "false".
+			            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_CONTACTS)) {
+			                // Buat alert dialog untuk meminta izin lagi.
+			                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this)
+			                    .setTitle("Request Runtime Permission")
+			                    .setMessage("Ijinkan untuk izin READ_CONTACTS")
+			                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+			                        @Override
+			                        public void onClick(DialogInterface di, int i) {
+			                            ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_CONTACTS}, MY_PERMISSION_REQUEST_READ_CONTACT);
+			                        }
+			                    });
+			                    alertDialog.setPositiveButton("Grant Permission", new DialogInterface.OnClickListener() {
+			                        @Override
+			                        public void onClick(DialogInterface di, int i) {
+			                            ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_CONTACTS}, MY_PERMISSION_REQUEST_READ_CONTACT);
+			                        }
+			                    });
+			                    alertDialog.show();
+			            }
+			            // Meminta izin ketika apk dibuka pertama kali.
+			            else {
+			            	// Fungsi yg menerima hasil adalah onRequestPermissionsResult().
+			                ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_CONTACTS}, MY_PERMISSION_REQUEST_READ_CONTACT);
+			            }
+			        }
+			        // Izin diberikan.
+			        else {
+			        	...
+			        }
+			    }
+			    
+			    // Fungsi menerima hasil dari meminta izin
+			    @Override
+			    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+			        switch(requestCode) {
+			            // Jika hasil kode sama dengan kode kita
+			            case MY_PERMISSION_REQUEST_READ_CONTACT:
+			                // Jika panjang data > 0(Tidak kosong) dan nilai ke 0 sama dengan nilai/kode izin PERMISSION_GRANTED(Diizinkan)
+			                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+			                    Toast.makeText(getApplicationContext(), "Yeah, permission is granted !!!", Toast.LENGTH_SHORT).show();
+			                }
+			                else {
+			                    Toast.makeText(getApplicationContext(), "Permission is not granted !!?", Toast.LENGTH_SHORT).show();
+			                }
+			                return;
+			        }
+			    }
+			    
+			    @Override
+			    protected void onCreate(Bundle savedInstanceState) {
+			        super.onCreate(savedInstanceState);
+			        setContentView(R.layout.activity_main);
+			        
+					// Panggil di fungsi.
+					requestReadContact();
+				}
+				...
+			}
+		]
+		- Kode Manifest.
+		[
+			...
+			<!-- Izin membaca kontak -->
+			 <uses-permission android:name="android.permission.READ_CONTACTS"/>
+			 ...
+		]
+
+
+

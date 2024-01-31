@@ -1,0 +1,13 @@
+
+| User Interface
+
+- Segala hal tentang antarmuka dari apk android, seperti gambar, tombol dll.
+  Dibagi menjadi 3:
+	- UI = Komponen dasat yang meng-handle user interface apk.
+	- UI Events = Segala bentuk tindakan di "user interface"/antarmuka.
+	- User Events = "Event" yg terdapat pada apk.
+  UI layer didefinisikan menjadi:
+	- Bussinees Logic = Untuk keperluan bisnis.
+	- UI Logic = Bawaan dari android.
+	
+	

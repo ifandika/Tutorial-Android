@@ -1,0 +1,136 @@
+
+				| Android MultiThreads
+
+- Berkerja pada banyak tugas disebut MultiTask, menjalankan beberapa tugas dalam waktu yg
+  bersamaan disebut MultiThreads. Thread adalah unit pada proses, MultiThreads dalam artian
+  menjalankan banyak proses dalam waktu yg bersamaan. Thread berkerja ketika thread dipanggil
+  (start), thread sedang berjalan(running), thread di hentikan karena tugasnya sudah selesai
+  (terminate).
+  
+  Thread	MessageQueue
+  start		[]	Looper
+	|		[]	|<-|
+  run...	[]	|->|
+    |		[] <---------- Handler
+  terminate
+
+
+| Siklus Hidup
+	[New Thread] 
+		start
+		-> [To Runnable] <- resume...
+			run
+			"Sedang berjalan dan berhenti sebentar 'yield'"
+			-> [Running]
+				suspend/wait/sleep
+				-> [Blocked]
+				
+				"Ketika thread di hentikan/matikan"
+				-> [Dead/Terminate]
+	
+| Handler
+- Objek untuk mengirim proses message yg berisi task/perkerjaan ke thread pada objek MessageQueue.
+  Atau simpelnya membungkus hal yg akan pada thread dan mengirim perkerjaan yg akan dilakukan ke
+  MessageQueue yg nantinya akan dieksekusi oleh looper.
+
+
+| Looper
+- Object yg digunakan untuk mengeksekusi/menjalankan MessageQueue pada sebuah thread.
+  Umumnya pada thread tidak memiliki queue/antrian untuk menjalankan banyak task, thread
+  akan dijalankan lalu jika sudah selesai maka thread akan dimatikan. Looper bisi "infinite" loop.
+  Untuk mengeksekusi banyak perkerjaan(task) pada thread maka gunakan looper untuk membuat
+  sebuah queue(antrian) perkerjaan pada thread.
+
+
+| MessageQueue
+- Daftar dari "task" berisi "Message" & "runnable" yg terdapat pada sebuah thread tertentu.
+
+
+| Implementasi
+- Membuat implementasi thread.
+  [ Contoh kode
+	public class ExamLooperThread extends Thread {
+		@Override
+		public void run() {
+			// ...
+			for(int i = 0; i < 10; i++) {
+				// Tampilkan hasil lewat log
+				Log.d("ExamThread", String.valueOf(i));
+			}
+		}
+	}
+  ]
+  Panggil dengan [ myObjectExamLooperHandler.start() ] lalu 'Log' dari nilai 0...9, jika kita panggil lagi maka akan eror.
+  Tambahkan objek Handler pada fungsi run dan panggil objek Looper untuk menjalankan tugas(panggil fungsi prepare
+  dan loop).
+  [ Kode
+		...
+		Handler handler;
+		
+		@Override
+		public void run() {
+			Looper.prepare();
+			handler = new Handler();
+			Looper.loop();
+		}
+		...
+  ]
+  Tugas for nya kita pindahkan dan masukan ke objek handler pada object ExamThread.
+  [ Kode
+	...
+	myObjectExamLooperHandler.handler.post(new Runnable() {
+		@Override
+		public void run() {
+			for(int i = 0; i < 10; i++) {
+				// Tampilkan hasil lewat log
+				Log.d("MainActivity", String.valueOf(i));
+				// Berikan delay
+				SystemClock.sleep(1000);
+			}
+		}
+	});
+	...
+  ]
+  Jalankan thread[ myObjectExamLooperHandler.start() ] lalu kita tambahkan(.post) tugas nya.
+  Buat objek Looper untuk hentikan loopernya.
+  [ Kode
+		...
+		Handler handler;
+		Looper looper;
+		
+		@Override
+		public void run() {
+			Looper.prepare();
+			looper = Looper.myLooper();
+			handler = new Handler();
+			Looper.loop();
+		}
+		...
+  ]
+  Hentikan looper[ myObjectExamLooperHandler.looper.quit() ], namum saat kita jalankan thread akan erro, agar tidak eror
+  kita bungkus myObjectClass dengan thread baru[ new Thread(myObjectExamLooperHandler).start() ].
+  Kirim tugas menggunakan objek Message.
+  Send message ke thread lewat objek Message.
+  [ Kode
+	...
+	Message message = Message.obtain();
+	message.what = <nilai_tipe_bilangan> contoh 1;
+	myObjectExamLooperHandler.sendMessage(message);
+  ]
+  Terima pesan di thread.
+  [ Kode
+	public class ExamThread extends Thread {
+		@Override
+		public void handleMessage(Message m) {
+			switch(m.what) {
+				case <nilai_tipe_bilangan>
+				...
+			}
+		}
+	}
+  ]
+  
+  
+| Catatan
+- Memberikan delay pada thread gunakan SystemClock.sleep(...), jangan gunakan Thread.sleep(...)
+  maka akan eror.

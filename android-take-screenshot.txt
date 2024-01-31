@@ -1,0 +1,40 @@
+
+| Android Take Screenshot
+
+- Mengambil screenshot pada android secara program. Elemen" penting seperti 
+  izin akses write ke storage(external/internal), path/alamat untuk simpan hasil,
+  objek Bitmap untuk simpan gambar.
+  [ Kode java
+	
+	public void takeScreenshot() {
+		// Untuk format nama gambar | years-month-day_hour_:minuts:second
+		CharSequence format = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", new Date());
+		try { 
+			String dirpath = Environment.getExternalStorageDirectory() + ""; 
+			
+			// Alamat simpan gambar dan namanya.
+			// Contoh: /storage/emulated/0/img-2023-03-27_09:44:01.jpeg
+			String path = dirpath + "/img-" + format + ".jpeg"; 
+			
+			View view = getWindow().getDecorView().getRootView();
+			view.setDrawingCacheEnabled(true);
+			
+			// Objek Bitmap untuk simpan hasil screenshot secara sementara
+			Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache()); 
+			view.setDrawingCacheEnabled(false); 
+			
+			File imageurl = new File(path); 
+			FileOutputStream outputStream = new FileOutputStream(imageurl); 
+			
+			// Kompres ke gambar dan pindahkan ke FileOutputStream
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); 
+			
+			// Tulis ke penyimpanan
+			outputStream.flush();
+			outputStream.close();
+		} catch (IOException e) { 
+			e.printStackTrace(); 
+		}
+	}
+
+  ]

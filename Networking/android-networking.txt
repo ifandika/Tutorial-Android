@@ -1,0 +1,7 @@
+
+| Android Networking
+
+- Konektivitas/jaringan pada android.
+- Android berkumunikasi dengan mahluk luar lewat "Messaging"/SMS, cara lain adalah dengan jaringan/internet.
+- Menggunakan HTTP untuk protokol komunikasi & TCP untuk soketnya.
+

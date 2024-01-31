@@ -1,0 +1,50 @@
+
+				| Android SQLite Database
+
+- Database open source(Terbuka) untuk menyimpan data pd perangkat dgn format teks.
+  Android menggunakan SQLite sebagai penyimpanan lokal.
+
+
+| Membuat database
+- Untuk membuat database ada banyak cara, bisa membuat baru/membuka yg sudah ada/dll.
+  Contoh membuat database baru.
+  [Kode
+	SQLiteDatabase mydatabase = openOrCreateDatabase("nam database",MODE_PRIVATE,null);
+  ]
+
+
+| Eksekusi ke database
+- Eksekusi/berbicara dengan database seperti menambah/mengambil/menghapus data. Untuk 
+  perintah sql yg  cfddr
+  [Kode
+	mydatabase.execSQL("statment_sql");
+  ]
+- Cursor resultSet = mydatbase.rawQuery("Statment sql",null);
+  resultSet.moveToFirst();
+  String data = resultSet.getString(...);
+						 .getColumntCount();
+						 ...
+
+| Database helper/pembantu
+- SQLiteOpenHelper untuk manajemen database, seperti pembuatan,versi,dll.
+- public class DBHelper extends SQLiteOpenHelper {
+	public DBHelper() {
+      super(context,DATABASE_NAME,null,1);
+    }
+    public void onCreate(SQLiteDatabase db) {
+    	...
+    }
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+    	...
+    }
+  }
+
+
+
+| Catatan
+- getWritableDatabase() untuk memodifikasi data di database, mulai tambah/hapus/dll.
+- getReadableDatabase() hanya untuk mengambil/membaca data saja.
+- SQLiteDatabase digunakan untuk operasi ke database(buat, hapus, query).
+- SQLiteQueryBuilder untuk membantu query, terdapat fungsi seperti query statment seperti tambah DISTINCT.
+
+

@@ -1,0 +1,90 @@
+
+				| Android Service
+
+- Sebuah pekerjaan yang berjalan di latar belakang apk, android service menggunakan 
+  protokol IPC(Inter Process Communication) dalam berkumunikasi, service berjalan pada
+  Thread utama. Karena berjalan pada Thread utama akan menurunkan performa, maka buat
+  Thread baru untuk Service.
+  Jenis memulai service:
+	- Start = Hanya menjalankan saja, tidak bisa mengirim permintaan/mengambil data/ dll.
+	- Bind = Memulai layanan seperti client-server dan bisa berkumunikasi.
+  Jenis-jenis service:
+	- Background = Berjalan dan akan mati ketika sudah selesai/apk ditutup.
+	- Foreground = Pekerjaan yang bisa berjalan walaupun apk sudah di tutup.
+	- Bound = Seperti client-server.
+
+
+| Siklus Hidup
+  - Siklus hidup service:
+		[ Start ]			  [ Bind ]
+	 membuat()				membuat()
+		|						|
+	  mulai()				ikat/bind()	 <- pangil lagi ------+
+		|						|							  |
+	sedang berjalan...		interaksi antar client-server	  |
+		|						|							  |
+	tidak ada respon ???	lepasHubungan() -> menyambungLagi() 
+		|						|
+	hancurkan()				hancurkan()
+		|						|
+	layanan mati :)			layanan mati :)
+
+
+| Implementasi
+- Mengimplementasikan service, setiap service harus deklarsi di menifest.
+  [
+		<manifest ... >
+			  <application ... >
+			      <service android:name=".MyService"/>
+			      ...
+			  </application>
+		</manifest>
+  ]
+  Membuat class service:
+  [
+		public class MyService extends Service {
+		    static final String TAG = "SimpleService: ";
+			
+			@Override
+			public void onCreate() {
+		        Toast.makeText(getApplicationContext(), TAG+"onCreate", Toast.LENGTH_SHORT).show();
+			}
+			
+		    @Override
+		    public int onStartCommand(Intent intent, int flags, int startId) {
+		        Toast.makeText(getApplicationContext(), TAG+"onStartCommand", Toast.LENGTH_SHORT).show();
+		        return START_STICKY;
+		    }
+		
+		    @Override
+		    public void onDestroy() {
+		        super.onDestroy();
+		        Toast.makeText(getApplicationContext(), TAG+"onDestroy", Toast.LENGTH_SHORT).show();
+		    }
+		}
+  ]
+  Memanggil service:
+  [
+		// Memulai service | akan memanggil onStartCommand()
+		startService(new Intent(getApplicationContext(), MyService.class));
+		
+		// Hentikan service | akan memanggil onDestroy()
+		stopService(new Intent(getApplicationContext(), MyService.class));
+		
+		// Hentikan service dari dalam class MyService | akan memanggil onDestroy()
+		stopSelf();
+  ]
+
+- Implementasi Foreground service.
+  Deklarasi izin Foreground service di menifest:
+  [
+		<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  ]
+  Buat class Foreground servicenya:
+  [
+  ]
+
+
+| Catatan
+- Agar service aman set android:exported=false.
+- Gunakan Intent tidak mengarah saat memulai layanan.

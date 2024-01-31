@@ -1,0 +1,18 @@
+
+| Komponen Arsitektur
+	- Menggunakan arsitektur MVVM(Model, View, ViewModel), Model untuk komponen 
+	  ke bagian backend/data/api apk, View untuk activity/UI/tampilan dari apk,
+	  ViewModel penghubung antar keduanya.
+	- Arsitektur MVVM menggunakan prinsip pemisahan, di android pemisahan pada kode
+	  tampilan(XML) dan kode utama(Java/Kotlin/dll).
+	- Komponen android menggunakan live data untuk komunikasi data, sehingga jika 
+	  kita mengubah data dari tempat 1 ke tempat lain langsung berubah.
+
+| Data Binding
+	- 'Library' untuk mengikat/menghubungkat(Bin) UI/komponen tampilan ke sumber data,
+	  komponen tidak perlu dideklarasi ke kode sumber namun langsung di hubungkan.
+	- Tombol A di tampilan A, tombol A dihubungkan ke fungsi di kode sumber, jika tombol
+	  di klik maka fungsi akan berkerja.
+	  
+	  
+	  

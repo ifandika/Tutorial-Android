@@ -1,0 +1,10 @@
+
+				| ANDROID CONTEXT
+
+- Context adalah sebuah objek yg berisi informasi dari semua ekosistem apk tersebut, 
+  seperi informasi activity, srvice, content provider, broadcast receiver. Digunakan
+  untuk mengakses komponen dalam apk.
+  Beberapa jenis umum pemanggilan context:
+	- getContex()
+	- getApplicationContext()
+	- getBaseContext()

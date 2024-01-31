@@ -1,0 +1,79 @@
+
+| Proto DataStore
+
+	- Menyimpan data denga key(kunci) & value(nilai) menggunakan protokol buffer.
+	- Menjamin aman.
+	
+| Demo
+	- Buat scema untuk konfigurasi proto di file pd direktori src/main/proto/<nama_file>.pb,
+	  pb(Protokol Buffer).
+[ Kode file proto
+	syntax = "proto3";
+
+	option java_package = "<nama_package>";
+	option java_multiple_files = true;
+	
+	message Settings {
+	  // Data yg akan dimasukan
+	  int32 example_counter = 1;
+}
+]
+[ Kode MainActivity
+	public class MainActivity extends AppCompatActivity {
+		
+		// Class untuk membaca konfigurasi file proto.
+		private static class SettingsSerializer implements Serializer<Settings> {
+			@Override
+			public Settings getDefaultValue() {
+			Settings.getDefaultInstance();
+		}
+		
+		@Override
+		public Settings readFrom(@NotNull InputStream input) {
+		    try {
+		      return Settings.parseFrom(input);
+		    } catch (exception: InvalidProtocolBufferException) {
+		      throw CorruptionException(“Cannot read proto.”, exception);
+		    }
+		}
+		
+		@Override
+		public void writeTo(Settings t, @NotNull OutputStream output) {
+			t.writeTo(output);
+		}
+		
+	}
+	
+	private Button buttonSave;
+	
+	// Objek data store untuk menyimpan data.
+	RxDataStore<Byte> dataStore = new RxDataStoreBuilder<Byte>(context, "<nama_file>.pb", new SettingsSerializer()).build();
+	
+		    
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		buttonSave = findViewById...
+		
+		// Ambil data dengan objek flowable.
+		Flowable<Integer> exampleCounterFlow = dataStore.data().map(settings -> settings.getExampleCounter());
+		
+		buttonSave.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Simpan data.
+				Single<Settings> update = dataStore.updateDataAsync(currentSettings ->
+					Single.just(
+						currentSettings.toBuilder()
+						.setExampleCounter(currentSettings.getExampleCounter() + 1)
+						.build()));
+				
+			}
+		}
+	}
+	
+        	
+	
+]

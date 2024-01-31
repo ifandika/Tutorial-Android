@@ -1,0 +1,27 @@
+
+| Android Notification
+
+- Notofication(Notifikasi) adalah pesan yg ditampilkan diluar apk.
+  Anatomy pada notifikasi:
+  [
+	Content Title = Judul notifikasi.
+	Content Text = Deskripsi dari notifikasi/informasi detail.
+	Icon = Ikon/gambar yg digunakan pada notifikasi.
+  ]
+  Membuat notifikasi sederhana.
+  [ Kode java
+	...
+	public void generateNotification() {
+		Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        
+		// Objek NotificationCompat.Builder untuk membuat struktur notifikasi beserta elemen".
+		NotificationCompat.Builder b = new NotificationCompat.Builder(this)
+            .setSmallIcon(R.drawable.<ikon_notifikasi>) // Wajib
+            .setContentTitle("Default notification") // Wajib
+            .setContentText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.") // Wajib
+            .setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_SOUND)
+            .setContentIntent(contentIntent)
+            .setContentInfo("Info");
+	}
+  ]

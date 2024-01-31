@@ -1,0 +1,63 @@
+
+| Preference DataStore
+
+	- Tempat meyimpan data dengan key(kunci) & value(nilai) menggunakan protokol buffer.
+	- Protokol Buffer adalah sebuah format data dalam komunikasi 1 dengan yang lain.
+	- Digunakan untuk data yang kecil, jika yg besar gunakan Room.
+	- Tidak menjamin aman.
+	
+| Demo
+[ Kode MainActivity
+
+	public class MainActivity extends AppCompatActivity {
+	    private Button buttonSave, buttonLoad;
+	    
+		// KEY_NAME sebagai key/tanda dari data yg disimpan, juga key untuk membaca/mengambil data.
+		Preferences.Key<String> KEY_NAME = PreferencesKeys.stringKey("name");
+		
+	    // Buat objek preference data store.
+	    private RxDataStore<Preferences> dataStore;
+	    
+	    @Override
+	    protected void onCreate(Bundle savedInstanceState) {
+	        super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_main);
+			
+			buttonSave = findViewById...
+			buttonLoad = findViewById...
+			
+			dataStore = new RxPreferenceDataStoreBuilder(context, "profiles").build();
+	    }
+	
+	    @Override
+	    protected void onStart() {
+	        super.onStart();
+	        
+	        buttonSave.setOnClickListener(new View.OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	                	// Tulis data ke menggunakan preference data store.
+						Single<Preferences> update =  dataStore.updateDataAsync(preferences -> {
+						// Set ke "mutable" agar data dapat dirubah, bukan membuat data baru dengan isi yg berbeda.
+						MutablePreferences mutablePreferences = preferences.toMutablePreferences();
+						mutablePreferences.set(KEY_NAME, <data_yg_disimpan_tipe_string>);
+						return Single.just(mutablePreferences);
+					});
+	            }
+	        });
+	        
+	        buttonLoad.setOnClickListener(new View.OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	            	// Ambil data menggunakan objek Flowable.
+	            	Flowable<String> flowable = dataStore.data().map(preferences -> {
+	            		String name = preferences.get(KEY_NAME);
+	            		// Tampilkan hasil... pada variabel name.
+	            		return name;
+	            	});
+	            	flowable.subscribe();
+	            }
+	    	}
+	    }
+	}
+]

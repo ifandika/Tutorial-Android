@@ -1,0 +1,39 @@
+
+				| Android Activity
+				
+- Tampilan dengan berbagai interaksi pengguna dalam apk, klik tombol, dll. 
+  Sistem android akan menjalankan program/kode yang instance Activity dgn 
+  memanggil fungsi callback. Untuk menggunakan Activity maka harus dideklarasikan pada file manifest
+  [Kode
+	<activity
+        android:name=".MainActivity"
+        android:label="@string/app_name">
+            <intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+    </activity>
+  ]
+  Activity disimpan pada Stack(Tumpukan). Activity baru diletakan di atas Activity sebelumnya,
+  Jika pengguna kembali ke Activity sebelumnya maka Activity yang telah dibuka akan dihancurkan.
+  
+  
+| Siklus Hidup(LifeCycle)
+- Siklus hidup/perilaku dari activity.
+  [
+	-> created -> start -> resumed -> paused -> stop -> destroy
+  ]
+  1. onCreate() = Ketika apk klik/dijalankan namun belum terlihat untuk pengguna.
+  2. onStart() = Ketika apk sudah terbuka dan terlihat untuk pengguna.
+  3. onResume() = Ketika apk berinteraksi dengan pengguna.
+  4. onPause() = Ketika apk di minimize/latar belakang ataubpengguna beralih atau activity tidak digunakan, pengguna 
+    		     kembali maka akan onResume() jika terlalu lama maka akan onStop().
+  5. onStop() = Ketika pengguna sangat lama tidak menggunakan activity, jika sudah terlalu lama maka lanjut ke onDestroy()
+  6. onRestart() = Jika pengguna kembali membuka/beralih lagi, lalu diteruskan ke onStart().
+  7. onDestroy() = Langkah terakhir yaitu menghapus activity dari memori.
+
+
+| Catatan
+- Jika sebuah apk memanggil apk lain maka activity pada apk yang dipanggil akan dijalankan,
+  sehingga tidak perlu memulai apk dari awal, hanya memulai activity yang dibutuhkan.
+- Activity tidak saling terikat(bebas).

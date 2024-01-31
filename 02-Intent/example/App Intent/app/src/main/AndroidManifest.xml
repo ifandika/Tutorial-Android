@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.appintent.main">
+
+    <!-- set an alarm -->
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
+    <!-- take pictures and videos -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true"
+        android:name=".Applications"
+        android:resizeableActivity="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+
+            </intent-filter>
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.SET_ALARM"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+            </intent-filter>
+            
+            <intent-filter>
+                <action android:name="android.media.action.IMAGE_CAPTURE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".DebugActivity"
+            android:screenOrientation="portrait"/>
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="4.0"/>
+
+    </application>
+
+</manifest>

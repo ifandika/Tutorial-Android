@@ -1,0 +1,4 @@
+
+				| Android Fragment
+
+- Tampilan terkecil dari activity.

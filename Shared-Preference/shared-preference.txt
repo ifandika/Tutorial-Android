@@ -1,0 +1,14 @@
+
+| Shared Preference
+
+	- Teknik menyimpan data dengan key(kunci) & value(nilai).
+
+| Mode
+	- Jenis akses data.
+	- Jenis mode Public & Private untuk jenis akses data jika Append untuk membaca/mengambil data.
+	- Public = Dapat diakses oleh pihak manapun.
+	- Private = Hanya dapat di akses pihak tertentu.
+	- Append = Hanya diakses ketika dibutuhkan.
+	
+| Catatan
+	- Untuk save data apply() lebih baik daripada commit().

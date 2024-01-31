@@ -1,0 +1,6 @@
+
+| Access Media Files
+
+	- Akses media/data seperti video/gambar/musik/dll.
+	
+| 

@@ -1,0 +1,170 @@
+
+					| Room Database
+
+- Menyimpan data ke database.
+- Menyimpan data dengan skala besar.
+- Cocok untuk apk offline.
+
+
+| Alur
+- UI/Fragment/Activity 
+	-> ViewModel(LiveData)
+		-> Room
+			- Entity
+			- DAOs(Data Access Objects)
+			-> SQLite
+
+
+| Anatomy DAOs
+- Interface yg dgn tanda(anotasi) @Dao sebagai akses/komunikasi ke database.
+[
+	@Dao
+	public interface UserDao {
+		@Insert
+		public void insert(User... user);
+		
+		@Delete
+		public void delete(User... user);
+		
+		@Query("SELECT * FROM User")
+		public List<String> getAll();
+		
+			...
+	}
+]
+	+ 2 Cara komunikasi/operasi ke database:
+		- Dengan fungsi yg ditujukan untuk operasi tertentu, insert/delete/update/dll.
+		- Dengan cara query, query ambil data/hapus data/update data.
+
+
+| Jenis² Anotasi
+	- @Dao = Penanda bahwa interface ini untuk akses ke database.
+	- @Insert = Untuk operasi tambah data.
+	- @Delete = Operasi hapus data.
+	- @Update = Operasi perbarui data.
+	- Query("SQL statment") = Query ke db.
+	- @ColumnInfo(name = "first_name") = Maka akan di ambil data dari kolom "first_name".
+	- MapInfo(...)
+
+
+| Spesial Tipe Data
+	- Spesial tipe data yaitu "PagingSource<..., ...>".
+
+
+| Entity
+	- Digunakan sebagai tanda untuk objek yg akan disimpan.
+	- Merepentasikan kolom dari table di database.
+
+
+| Anatomi Entity
+	[ Contoh
+		@Entity
+		public class User {
+			@PrimaryKey
+			public int id;
+			
+			public String firstName;
+			public String lastName;
+		}
+	]
+	- Bawaan room menggunakan nama class untuk nama database, jika berbeda tambahkan
+	  pada @Entity(tableName = "<nama_database").
+	- Multi primary key.
+	[ Contoh
+		@Entity(primaryKeys = {"firstName", "lastName"})
+		public class User {
+			public String firstName;
+			public String lastName;
+		}
+	]
+	- Di ignorkan.
+	[ Contoh
+		@Entity
+		public class User {
+			@PrimaryKey
+			public int id;
+			
+			@Ignore
+			Bitmap picture;
+		}
+	]
+
+
+| Implementasi RoomDatabase
+- 3 Komponen penting yaitu Data Entity(Format data student, person, dll), DAO(Untuk operasi ke
+  database), Database(Untuk deklarasi).
+  Kode dari Data Entity:
+  [
+	@Entity
+	public class Student {
+	    @PrimaryKey
+	    public int uid;
+	
+	    @ColumnInfo(name = "first_name")
+	    public String firstName;
+	
+	    @ColumnInfo(name = "last_name")
+	    public String lastName;
+	}
+  ]
+  
+  Kode dari DAO:
+  [
+	@Dao
+	public interface StudentDao {
+	    @Query("SELECT * FROM student")
+	    List<User> getAll();
+	
+	    @Query("SELECT * FROM student WHERE uid IN (:userIds)")
+	    List<User> loadAllByIds(int[] userIds);
+	
+	    @Query("SELECT * FROM student WHERE first_name LIKE :first AND " +
+	           "last_name LIKE :last LIMIT 1")
+	    User findByName(String first, String last);
+	
+	    @Insert
+	    void insertAll(Student... student);
+	
+	    @Delete
+	    void delete(Student student);
+	}
+  ]
+  
+  Kode dari RoomDatabase:
+  [
+	// Menggunakan design pattern singelton
+	@Database(entities = Student.class, exportSchema = false, version = 1)
+	public abstract class StudentDatabase extends RoomDatabase {
+	    /*
+	    private static final String DBASE_NAME = "Student";
+	    private static UserDatabase instance;
+	    
+	    public static synchronized UserDatabase getInstance(Context context) {
+	        if(instance == null) {
+	            instance = Room.databaseBuilder(context.getApplicationContext(), UserDatabase.class, DBASE_NAME)
+	                .fallbackToDestructiveMigration()
+	                .build();
+	        }
+	        return instance;
+	    }
+	    */
+	    
+	    public abstract StudentDao studentDao();
+	}
+  ]
+  
+  Deklarasi RoomDatabase:
+  [
+	StudentDatabase db = Room.databaseBuilder(getApplicationContext(),
+        StudentDatabase.class, "database-name").build();
+  ]
+  
+  Contoh melakukan operai:
+  [
+	UserDao userDao = db.userDao();
+	List<User> users = userDao.getAll();
+  ]
+
+
+| Catatan
+	- Tabel dan kolom sql bersifat case-insensitive(tidak terlalu sensistive).

@@ -1,0 +1,9 @@
+
+				| Android Problem
+
+| Error xml invalid aapt targetApi remove replace strict
+- Eror pada bagian file xml AndroidManifest dari plugin tersebut, jika eror pada 
+  folder bin jangan modif di bin modif pada AndroidManifest yg utama pada plugin itu,
+  hapus tools:targetApi.
+  
+
